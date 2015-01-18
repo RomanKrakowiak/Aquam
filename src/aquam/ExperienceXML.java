@@ -44,7 +44,7 @@ public class ExperienceXML {
       try{
          //On crée un nouveau document JDOM avec en argument le fichier XML
          //Le parsing est terminé 
-         documentdoc = sxb.build(new File("C:\\Users\\RomanK\\Desktop\\easyaquamuml.xml"));
+         documentdoc = sxb.build(new File(System.getProperty("user.dir")+"\\easyaquamxml.xml"));
          
       } catch(Exception e){
           
