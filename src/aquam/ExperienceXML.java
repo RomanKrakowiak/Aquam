@@ -19,7 +19,13 @@ import org.jdom2.output.*;
 import java.util.regex.*;
 
 public class ExperienceXML {
+    /**
+     * Document file containing the parsed xml file
+     */
    static org.jdom2.Document documentdoc;
+   /**
+    * Have to be the racine of the xml file
+    */
    static Element racinedoc;
 
    /**
