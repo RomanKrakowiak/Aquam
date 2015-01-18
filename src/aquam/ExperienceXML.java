@@ -17,6 +17,7 @@ import java.util.Iterator;
 import org.jdom2.output.*;
 import java.util.regex.*;
 import java.sql.*;
+import org.postgresql.*;
 
 public class ExperienceXML {
 
@@ -43,7 +44,7 @@ public class ExperienceXML {
         //On crée une instance de SAXBuilder
         SAXBuilder sxb = new SAXBuilder();
         try {
-         //On crée un nouveau document JDOM avec en argument le fichier XML
+            //On crée un nouveau document JDOM avec en argument le fichier XML
             //Le parsing est terminé 
             documentdoc = sxb.build(new File(System.getProperty("user.dir") + "\\easyaquamxml.xml"));
 
@@ -144,13 +145,14 @@ public class ExperienceXML {
      * @param source Have to be the racine of the xml file
      */
     static void insertExperience(Element source) {
+        String experienceSQLCode;
+        experienceSQLCode = "";
         try {
 
             List listDescendants = source.getChildren();
             Iterator i = listDescendants.iterator();
             String rowIndexValue;
-            String experienceSQLCode;
-            experienceSQLCode = "";
+
             boolean count = false;
 
             while (i.hasNext()) {
@@ -171,10 +173,11 @@ public class ExperienceXML {
                 }
 
             }
-            System.out.println(experienceSQLCode);
+
         } catch (Exception e) {
 
         }
+        exportToDataBase(experienceSQLCode);
     }
 
     /**
@@ -270,7 +273,7 @@ public class ExperienceXML {
 
         }
 
-        return "INSERT INTO etape(" + requestAttributeName + ") VALUES(" + requestAttributeValue + ")";
+        return "\n\n" + "INSERT INTO\n" + "etape(" + requestAttributeName + ")\n" + "VALUES\n" + "(" + requestAttributeValue + ")";
     }
 
     /**
@@ -290,6 +293,29 @@ public class ExperienceXML {
         l = l.replace("Group_Type", "GroupType");
         l = l.replace("Group", "Group_");
         return l;
+    }
+
+    static void exportToDataBase(String query) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");
+            con.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+
+            Statement stmt;
+            stmt = con.createStatement();
+            stmt.executeUpdate(query);
+            System.out.println(query);
+
+            stmt.close();
+            con.commit();
+            con.close();
+        } catch (java.lang.ClassNotFoundException e) {
+            System.err.println("ClassNotFoundException:" + e.getMessage());
+        } catch (SQLException ex) {
+            System.err.println("SQLException:" + ex.getMessage());
+        }
+        System.out.println("Records created successfully");
     }
 
 }
