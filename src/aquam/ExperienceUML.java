@@ -281,7 +281,7 @@ static String insertEtape(Iterator dataTraveler){
                 temp = makeStringSQLReadable(temp);
                 break;
         }
-        if(temp=="" || temp.isEmpty()){
+        if("".equals(temp) || temp.isEmpty()){
             notNullValue=false;
         }
         
@@ -302,10 +302,13 @@ static String insertEtape(Iterator dataTraveler){
                 if(cellPossibility.getAttributeValue("Index").equals(stringIndex)){
                     search = false;
                     tempName = cellPossibility.getChildTextTrim("Data");
-                    tempName = makeStringSQLReadable(temp);
+                    tempName = makeStringSQLReadable(tempName);
                     requestAttributeName = requestAttributeName + tempName;
                 }
             
+            }
+            if(data.getAttributeValue("Type").equals("String")){
+                temp = "'"+temp+"'";
             }
             requestAttributeValue = requestAttributeValue + temp;
         }
@@ -325,6 +328,9 @@ static String makeStringSQLReadable(String a){
     l = l.replace("/","_per_");
     l = l.replace("°","degre");
     l = l.replace("²","square");
+    l = l.replace("->","_to_");
+    l = l.replace("Group_Type","GroupType");
+    l = l.replace("Group","Group_");
     return l;
 }
 
