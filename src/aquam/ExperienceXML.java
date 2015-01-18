@@ -294,7 +294,12 @@ public class ExperienceXML {
         l = l.replace("Group", "Group_");
         return l;
     }
-
+    
+    /**
+     * 
+     * This function inserts the datas in the database
+     * @param query is the String of the final SQL query
+     */
     static void exportToDataBase(String query) {
         try {
             Class.forName("org.postgresql.Driver");
