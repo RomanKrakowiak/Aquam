@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -34,10 +33,6 @@ public class GUIAquam extends JFrame implements ActionListener {
     private JMenu jMenuClose;
     private JMenuItem jCloseApp;
 
-    // Panel Boutons
-    private JPanel jPanelBoutons;
-    private JToggleButton jPlateau[][];
-
     // Paanel Text +Reset button
     private JPanel jPanelTexte;
     private JScrollPane jScrollPane;
@@ -61,7 +56,7 @@ public class GUIAquam extends JFrame implements ActionListener {
     }
 
     /**
-     * 
+     *
      * Creation of the Machine-User Interface
      */
     private void initGUIComponents() {
@@ -186,9 +181,10 @@ public class GUIAquam extends JFrame implements ActionListener {
     }
 
     /**
-     * 
+     *
      * Management of the ActionEvents
-     * @param e ActionEvent  
+     *
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -202,23 +198,15 @@ public class GUIAquam extends JFrame implements ActionListener {
                 jZoneTexte.append("Choose a file\n");
                 break;
             case "Choose File":
-                address = FileChooser();
-                if(failFileChooser){
+                address = fileChooser();
+                if (failFileChooser) {
                     failFileChooser = false;
                     break;
                 }
                 jZoneTexte.append(address + " selected\n" + "Click on Process to import it\n");
                 break;
             case "Process":
-                if (newExperience) {
-                    try {
-                        ExperienceXML.operationPrincipale(address);
-                        jZoneTexte.append("The xml file has been imported in the DataBase successfully\n");
-                    } catch (Exception exc) {
-                        jZoneTexte.append("Fail about inserting the xml file into the DataBase\n");
-                    }
-                    newExperience = false;
-                }
+                processCalled();
                 break;
             case "Clear Text":
                 jZoneTexte.setText("");
@@ -236,11 +224,12 @@ public class GUIAquam extends JFrame implements ActionListener {
     }
 
     /**
-     * 
-     * FileChooser() allows the user to search a file 
-     * @return The adress of the file selected 
+     *
+     * fileChooser() allows the user to search a file
+     *
+     * @return The adress of the file selected
      */
-    private String FileChooser() {
+    private String fileChooser() {
 
         JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
@@ -250,11 +239,23 @@ public class GUIAquam extends JFrame implements ActionListener {
             //This is where a real application would open the file.
             return file.getName();
         } else {
-            jZoneTexte.append("Open command canceled by user.\n"+"Process canceled.\n");
+            jZoneTexte.append("Open command canceled by user.\n" + "Process canceled.\n");
             newExperience = false;
             jChooseFile.setVisible(false);
             failFileChooser = true;
         }
         return null;
+    }
+
+    private void processCalled() {
+        if (newExperience) {
+            try {
+                ExperienceXML.operationPrincipale(address);
+                jZoneTexte.append("The xml file has been imported in the DataBase successfully\n");
+            } catch (Exception exc) {
+                jZoneTexte.append("Fail about inserting the xml file into the DataBase\n");
+            }
+            newExperience = false;
+        }
     }
 }
