@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package aquam;
 
 /**
@@ -40,13 +36,14 @@ public class ExperienceXML {
      * The main equivalent of ExperienceXML. It loads and parses the xml file.
      * Then it gets the racine Element and call the next function
      */
-    public static void operationPrincipale() {
+    public static void operationPrincipale(String address) {
         //On crée une instance de SAXBuilder
         SAXBuilder sxb = new SAXBuilder();
         try {
             //On crée un nouveau document JDOM avec en argument le fichier XML
             //Le parsing est terminé 
-            documentdoc = sxb.build(new File(System.getProperty("user.dir") + "\\easyaquamxml.xml"));
+            //code test: documentdoc = sxb.build(new File(System.getProperty("user.dir") + "\\easyaquamxml.xml"));
+            documentdoc = sxb.build(new File(address));
 
         } catch (Exception e) {
 
