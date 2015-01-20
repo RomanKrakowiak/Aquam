@@ -256,6 +256,7 @@ public class GUIAquam extends JFrame implements ActionListener {
                 jZoneTexte.append("Fail about inserting the xml file into the DataBase\n");
             }
             newExperience = false;
+            jChooseFile.setVisible(false);
         }
     }
 }
