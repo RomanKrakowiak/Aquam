@@ -1,0 +1,76 @@
+
+static void afficheALL(){
+    
+    List listWorkbook = racinedoc.getChildren("Workbook");
+    Iterator m = listWorkbook.iterator();
+    while(m.hasNext()){
+        
+    
+    Element courantWorkbook = (Element)m.next();
+   
+    List listWorksheet = courantWorkbook.getChildren("Worksheet");
+
+    //On crée un Iterator sur notre liste
+    Iterator i = listWorksheet.iterator();
+    while(i.hasNext()){
+      
+       
+       Element courantWorksheet = (Element)i.next();
+       List listTable = courantWorksheet.getChildren("Table");
+
+        //On crée un Iterator sur notre liste
+       Iterator j = listTable.iterator();
+       while(j.hasNext()){
+           Element courantTable = (Element)j.next();
+           List listRow = courantTable.getChildren("Row");
+
+           //On crée un Iterator sur notre liste
+           Iterator k = listRow.iterator();
+           while(k.hasNext()){
+               Element courantRow = (Element)k.next();
+               List listCell = courantRow.getChildren("Cell");
+               
+               Iterator l = listCell.iterator();
+               while(l.hasNext()){
+                   Element courantCell = (Element)l.next();
+                   Element courantData = courantCell.getChild("Data");
+                   System.out.println(courantData.getValue());
+                   System.out.println(courantData.getTextTrim());
+                   switch (courantData.getAttributeValue("Type")) {
+                       case "Number":
+                           System.out.println(courantData.getValue());
+                           break;
+                       case "String":
+                           System.out.println(courantData.getTextTrim());
+                           break;
+                   }
+               }
+                   
+               
+           }
+            
+        }  
+    }
+    }
+}
+// dans afficheDatas()
+    try{
+    while(descendants.hasNext()){
+        
+        Element courantDescendant = (Element)descendants.next();
+        
+        if(courantDescendant.getName().equals("Data")){
+            switch (courantDescendant.getAttributeValue("Type")) {
+                       case "Number":
+                           System.out.println(courantDescendant.getValue());
+                           break;
+                       case "String":
+                           System.out.println(courantDescendant.getTextTrim());
+                           break;
+                   }
+        }
+    }
+    } catch(Exception e){
+        
+    }
+    

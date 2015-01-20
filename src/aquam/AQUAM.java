@@ -7,6 +7,13 @@ package aquam;
 public class AQUAM {
 
     static GUIAquam interf;
+
+    /**
+     * constructor
+     */
+    private AQUAM() {
+    }
+    
     /**
      * @param args the command line arguments
      */

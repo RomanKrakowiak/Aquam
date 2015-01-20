@@ -247,14 +247,21 @@ public class GUIAquam extends JFrame implements ActionListener {
         return null;
     }
 
+    /**
+     * 
+     * This function manages what happens when we click on process
+     */
     private void processCalled() {
         if (newExperience) {
             try {
-                ExperienceXML.operationPrincipale(address);
-                jZoneTexte.append("The xml file has been imported in the DataBase successfully\n");
+                if (ExperienceXML.cleanXMLFile(address)) {
+                    ExperienceXML.operationPrincipale(System.getProperty("user.dir") + "\\xmlPropre.xml");
+                    jZoneTexte.append("The xml file has been imported in the DataBase successfully\n");
+                }
             } catch (Exception exc) {
                 jZoneTexte.append("Fail about inserting the xml file into the DataBase\n");
             }
+            address = "";
             newExperience = false;
             jChooseFile.setVisible(false);
         }

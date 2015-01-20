@@ -14,6 +14,10 @@ import org.jdom2.output.*;
 import java.util.regex.*;
 import java.sql.*;
 import org.postgresql.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class ExperienceXML {
 
@@ -41,8 +45,6 @@ public class ExperienceXML {
         SAXBuilder sxb = new SAXBuilder();
         try {
             //On crée un nouveau document JDOM avec en argument le fichier XML
-            //Le parsing est terminé 
-            //code test: documentdoc = sxb.build(new File(System.getProperty("user.dir") + "\\easyaquamxml.xml"));
             documentdoc = sxb.build(new File(address));
 
         } catch (Exception e) {
@@ -291,9 +293,9 @@ public class ExperienceXML {
         l = l.replace("Group", "Group_");
         return l;
     }
-    
+
     /**
-     * 
+     *
      * This function inserts the datas in the database
      * @param query is the String of the final SQL query
      */
@@ -320,4 +322,37 @@ public class ExperienceXML {
         System.out.println("Records created successfully");
     }
 
+    /**
+     * 
+     * The xml cleaner before parsing function
+     * @param address is the xml file selected by the file chooser
+     * @return true if the xml has been cleaned and stored in "xmlPropre.xml" succesfully
+     */
+    static boolean cleanXMLFile(String address) {
+        BufferedReader reader;
+        BufferedWriter writer;
+        String line;
+        
+        try {
+            reader = new BufferedReader(new FileReader(address));
+            writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "\\xmlPropre.xml"));
+        
+            while((line=reader.readLine())!= null){
+                if (line.contains("<Workbook")){
+                    line="<Workbook>";
+                }
+                line = line.replace("ss:", "");
+                line = line.replace(":", "");
+                writer.write(line);
+                writer.newLine();
+            }
+            reader.close();
+            writer.flush();
+            writer.close();
+            return true;
+        } catch (Exception ex) {
+            System.out.println("File not washed! :\n"+ex);
+        }
+        return false;
+    }
 }

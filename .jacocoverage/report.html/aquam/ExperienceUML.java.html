@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExperienceUML.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;AQUAM&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">aquam</a> &gt; <span class="el_source">ExperienceUML.java</span></div><h1>ExperienceUML.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package aquam;
+
+/**
+ *
+ * @author rkrakowi
+ */
+
+import java.io.*;
+import org.jdom2.*;
+import org.jdom2.input.*;
+import org.jdom2.filter.*;
+import java.util.List;
+import java.util.Iterator;
+import org.jdom2.output.*;
+import java.util.regex.*;
+
+public class ExperienceUML {
+   static org.jdom2.Document documentdoc;
+   static Element racinedoc;
+
+<span class="nc" id="L25">    public ExperienceUML() {</span>
+<span class="nc" id="L26">    }</span>
+   
+   
+
+   public static void operationPrincipale()
+   {
+      //On crée une instance de SAXBuilder
+<span class="fc" id="L33">      SAXBuilder sxb = new SAXBuilder();</span>
+      try
+      {
+         //On crée un nouveau document JDOM avec en argument le fichier XML
+         //Le parsing est terminé 
+<span class="fc" id="L38">         documentdoc = sxb.build(new File(&quot;C:\\Users\\RomanK\\Desktop\\easyaquamuml.xml&quot;));</span>
+         
+      }
+<span class="nc" id="L41">      catch(Exception e){</span>
+<span class="nc" id="L42">          e.printStackTrace();</span>
+<span class="fc" id="L43">      }</span>
+      
+      //On initialise un nouvel élément racine avec l'élément racine du document.
+<span class="fc" id="L46">      racinedoc = documentdoc.getRootElement();</span>
+      
+      
+
+      
+<span class="fc" id="L51">      insertExperience(racinedoc);</span>
+      
+<span class="fc" id="L53">   }</span>
+/*   
+static void afficheALL()
+{
+    
+    List listWorkbook = racinedoc.getChildren(&quot;Workbook&quot;);
+    Iterator m = listWorkbook.iterator();
+    while(m.hasNext())
+    {
+        
+    
+    Element courantWorkbook = (Element)m.next();
+   
+    List listWorksheet = courantWorkbook.getChildren(&quot;Worksheet&quot;);
+
+    //On crée un Iterator sur notre liste
+    Iterator i = listWorksheet.iterator();
+    while(i.hasNext())
+    {
+      
+       
+       Element courantWorksheet = (Element)i.next();
+       List listTable = courantWorksheet.getChildren(&quot;Table&quot;);
+
+        //On crée un Iterator sur notre liste
+       Iterator j = listTable.iterator();
+       while(j.hasNext())
+       {
+           Element courantTable = (Element)j.next();
+           List listRow = courantTable.getChildren(&quot;Row&quot;);
+
+           //On crée un Iterator sur notre liste
+           Iterator k = listRow.iterator();
+           while(k.hasNext())
+           {
+               Element courantRow = (Element)k.next();
+               List listCell = courantRow.getChildren(&quot;Cell&quot;);
+               
+               Iterator l = listCell.iterator();
+               while(l.hasNext())
+               {
+                   Element courantCell = (Element)l.next();
+                   Element courantData = courantCell.getChild(&quot;Data&quot;);
+                   System.out.println(courantData.getValue());
+                   System.out.println(courantData.getTextTrim());
+                   switch (courantData.getAttributeValue(&quot;Type&quot;)) {
+                       case &quot;Number&quot;:
+                           System.out.println(courantData.getValue());
+                           break;
+                       case &quot;String&quot;:
+                           System.out.println(courantData.getTextTrim());
+                           break;
+                   }
+               }
+                   
+               
+           }
+            
+        }  
+    }
+    }
+}
+*/
+static void affiche()
+{
+   try
+   {
+      //On utilise ici un affichage classique avec getPrettyFormat()
+<span class="nc" id="L121">      XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());</span>
+<span class="nc" id="L122">      sortie.output(documentdoc, System.out);</span>
+   }
+<span class="nc" id="L124">   catch (java.io.IOException e){}</span>
+<span class="nc" id="L125">}</span>
+
+static void afficheDatas(Element source){
+    
+    
+    
+<span class="nc" id="L131">    List listDescendants = source.getChildren();</span>
+<span class="nc" id="L132">    Iterator i = listDescendants.iterator();</span>
+    
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    while(i.hasNext()){</span>
+<span class="nc" id="L135">        Element testSuivant = (Element)i.next();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (testSuivant.getName().equals(&quot;Data&quot;)){</span>
+<span class="nc bnc" id="L137" title="All 10 branches missed.">            switch (testSuivant.getAttributeValue(&quot;Type&quot;)) {</span>
+                       case &quot;Number&quot;:
+<span class="nc" id="L139">                           System.out.println(testSuivant.getValue());</span>
+<span class="nc" id="L140">                           break;</span>
+                       case &quot;String&quot;:
+<span class="nc" id="L142">                           String nom = testSuivant.getTextTrim();</span>
+<span class="nc" id="L143">                           nom = nom.replace(&quot;%&quot;,&quot;percent&quot;);</span>
+<span class="nc" id="L144">                           nom = nom.replace(&quot;(&quot;,&quot;&quot;);</span>
+<span class="nc" id="L145">                           nom = nom.replace(&quot;)&quot;,&quot;&quot;);</span>
+<span class="nc" id="L146">                           nom = nom.replace(&quot;/&quot;,&quot;_per_&quot;);</span>
+<span class="nc" id="L147">                           nom = nom.replace(&quot;°&quot;,&quot;degre&quot;);</span>
+<span class="nc" id="L148">                           nom = nom.replace(&quot;²&quot;,&quot;square&quot;);</span>
+<span class="nc" id="L149">                           System.out.println(nom);</span>
+<span class="nc" id="L150">                           break;</span>
+                   }
+            
+            
+            
+            
+        } else {
+<span class="nc" id="L157">            afficheDatas(testSuivant);</span>
+        }
+        
+<span class="nc" id="L160">    }</span>
+    
+    
+    
+    
+    
+    /*try{
+    while(descendants.hasNext()){
+        
+        Element courantDescendant = (Element)descendants.next();
+        
+        if(courantDescendant.getName().equals(&quot;Data&quot;))
+        {
+            switch (courantDescendant.getAttributeValue(&quot;Type&quot;)) {
+                       case &quot;Number&quot;:
+                           System.out.println(courantDescendant.getValue());
+                           break;
+                       case &quot;String&quot;:
+                           System.out.println(courantDescendant.getTextTrim());
+                           break;
+                   }
+        }
+    }
+    } catch(Exception e){e.printStackTrace();}*/
+<span class="nc" id="L184">}</span>
+
+static Element searchFirstRow(Element source){
+    
+    
+    
+<span class="fc" id="L190">    List listDescendants = source.getChildren();</span>
+<span class="fc" id="L191">    Iterator i = listDescendants.iterator();</span>
+    
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">    while(i.hasNext()){</span>
+<span class="fc" id="L194">        Element testSuivant = (Element)i.next();</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (testSuivant.getName().equals(&quot;Row&quot;)){</span>
+            
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">            if(testSuivant.getAttributeValue(&quot;Index&quot;).equals(String.valueOf(1))){</span>
+<span class="fc" id="L198">                return testSuivant;</span>
+            }
+            
+            
+        } else {
+<span class="fc" id="L203">            Element answer = searchFirstRow(testSuivant);</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            if (answer != null){</span>
+<span class="fc" id="L205">                return answer;</span>
+            }
+        }
+        
+<span class="nc" id="L209">    }</span>
+<span class="nc" id="L210">    return null;</span>
+}
+    
+static void insertExperience(Element source){
+    try{
+    
+    
+<span class="fc" id="L217">    List listDescendants = source.getChildren();</span>
+<span class="fc" id="L218">    Iterator i = listDescendants.iterator();</span>
+    String rowIndexValue;
+    String experienceSQLCode;
+<span class="fc" id="L221">    experienceSQLCode=&quot;&quot;;</span>
+<span class="fc" id="L222">    boolean count = false;</span>
+    
+<span class="fc bfc" id="L224" title="All 2 branches covered.">    while(i.hasNext()){</span>
+<span class="fc" id="L225">        Element testSuivant = (Element)i.next();</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (testSuivant.getName().equals(&quot;Row&quot;)){</span>
+<span class="fc" id="L227">            rowIndexValue = testSuivant.getAttributeValue(&quot;Index&quot;);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            if(Integer.valueOf(rowIndexValue)&gt;1){</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">                if (count){</span>
+<span class="fc" id="L230">                    experienceSQLCode = experienceSQLCode + &quot;; &quot;;</span>
+                } else {
+<span class="fc" id="L232">                    count = true;</span>
+                }
+<span class="fc" id="L234">                experienceSQLCode = experienceSQLCode + insertEtape(testSuivant.getChildren(&quot;Cell&quot;).iterator());</span>
+            }
+            
+            
+            
+        } else {
+<span class="fc" id="L240">            insertExperience(testSuivant);</span>
+        }
+        
+<span class="fc" id="L243">    }</span>
+<span class="fc" id="L244">    System.out.println(experienceSQLCode);</span>
+<span class="nc" id="L245">    } catch (Exception e){</span>
+<span class="nc" id="L246">        e.printStackTrace();</span>
+<span class="fc" id="L247">    }</span>
+<span class="fc" id="L248">}</span>
+
+static String insertEtape(Iterator dataTraveler){
+    String requestAttributeName;
+    String requestAttributeValue;
+<span class="fc" id="L253">    requestAttributeName = &quot;&quot;;</span>
+<span class="fc" id="L254">    requestAttributeValue = &quot;&quot;;</span>
+    String stringIndex;
+    int numIndex;
+    String temp;
+<span class="fc" id="L258">    temp = &quot;&quot;;</span>
+    String tempName;
+<span class="fc" id="L260">    tempName = &quot;&quot;;</span>
+    boolean count;
+    boolean search;
+    boolean notNullValue;
+<span class="fc" id="L264">    count = false;</span>
+<span class="fc" id="L265">    notNullValue = true;</span>
+    
+<span class="fc" id="L267">    Element firstRow = searchFirstRow(racinedoc);</span>
+<span class="fc" id="L268">    Iterator nameData = firstRow.getChildren(&quot;Cell&quot;).iterator();</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">    while(dataTraveler.hasNext()){</span>
+<span class="fc" id="L270">        notNullValue = true;</span>
+<span class="fc" id="L271">        Element newData = (Element)dataTraveler.next();</span>
+<span class="fc" id="L272">        stringIndex = newData.getAttributeValue(&quot;Index&quot;);</span>
+<span class="fc" id="L273">        numIndex = Integer.valueOf(stringIndex);</span>
+<span class="fc" id="L274">        Element data = (Element)newData.getChild(&quot;Data&quot;);</span>
+<span class="pc bpc" id="L275" title="4 of 10 branches missed.">        switch (data.getAttributeValue(&quot;Type&quot;)) {</span>
+            case &quot;Number&quot;:
+<span class="fc" id="L277">                temp = data.getValue();</span>
+<span class="fc" id="L278">                break;</span>
+            case &quot;String&quot;:
+<span class="fc" id="L280">                temp = data.getTextTrim();</span>
+<span class="fc" id="L281">                temp = makeStringSQLReadable(temp);</span>
+                break;
+        }
+<span class="pc bpc" id="L284" title="1 of 4 branches missed.">        if(&quot;&quot;.equals(temp) || temp.isEmpty()){</span>
+<span class="fc" id="L285">            notNullValue=false;</span>
+        }
+        
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if(notNullValue){</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">            if(count){</span>
+<span class="fc" id="L290">                requestAttributeName = requestAttributeName + &quot;, &quot;;</span>
+<span class="fc" id="L291">                requestAttributeValue = requestAttributeValue +&quot;, &quot;;</span>
+            }else{
+<span class="fc" id="L293">                count=true;</span>
+            }
+        
+        
+        
+<span class="fc" id="L298">            search = true;</span>
+<span class="fc bfc" id="L299" title="All 4 branches covered.">            while(nameData.hasNext() &amp;&amp; search){</span>
+            
+<span class="fc" id="L301">                Element cellPossibility =(Element)nameData.next();</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">                if(cellPossibility.getAttributeValue(&quot;Index&quot;).equals(stringIndex)){</span>
+<span class="fc" id="L303">                    search = false;</span>
+<span class="fc" id="L304">                    tempName = cellPossibility.getChildTextTrim(&quot;Data&quot;);</span>
+<span class="fc" id="L305">                    tempName = makeStringSQLReadable(tempName);</span>
+<span class="fc" id="L306">                    requestAttributeName = requestAttributeName + tempName;</span>
+                }
+            
+<span class="fc" id="L309">            }</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">            if(data.getAttributeValue(&quot;Type&quot;).equals(&quot;String&quot;)){</span>
+<span class="fc" id="L311">                temp = &quot;'&quot;+temp+&quot;'&quot;;</span>
+            }
+<span class="fc" id="L313">            requestAttributeValue = requestAttributeValue + temp;</span>
+        }
+        
+        
+<span class="fc" id="L317">    }</span>
+    
+    
+<span class="fc" id="L320">    return &quot;INSERT INTO etape(&quot; + requestAttributeName + &quot;) VALUES(&quot; + requestAttributeValue + &quot;)&quot;;</span>
+}
+
+static String makeStringSQLReadable(String a){
+<span class="fc" id="L324">    String l = a;</span>
+<span class="fc" id="L325">    l = l.replace(&quot;%&quot;,&quot;percent&quot;);</span>
+<span class="fc" id="L326">    l = l.replace(&quot;(&quot;,&quot;&quot;);</span>
+<span class="fc" id="L327">    l = l.replace(&quot;)&quot;,&quot;&quot;);</span>
+<span class="fc" id="L328">    l = l.replace(&quot;/&quot;,&quot;_per_&quot;);</span>
+<span class="fc" id="L329">    l = l.replace(&quot;°&quot;,&quot;degre&quot;);</span>
+<span class="fc" id="L330">    l = l.replace(&quot;²&quot;,&quot;square&quot;);</span>
+<span class="fc" id="L331">    l = l.replace(&quot;-&gt;&quot;,&quot;_to_&quot;);</span>
+<span class="fc" id="L332">    l = l.replace(&quot;Group_Type&quot;,&quot;GroupType&quot;);</span>
+<span class="fc" id="L333">    l = l.replace(&quot;Group&quot;,&quot;Group_&quot;);</span>
+<span class="fc" id="L334">    return l;</span>
+}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
