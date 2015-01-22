@@ -237,8 +237,8 @@ public class GUIAquam extends JFrame implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             //This is where a real application would open the file.
-            if (file.getName().equals("xmlPropre.xml")) {
-                jZoneTexte.append("You should not call the xml file: xmlPropre.xml\n" + "It is a xml used by the application to work.\n" + "Process canceled.\n");
+            if (file.getName().equals("xmlPropre.xml") || file.getName().equals("build.xml")) {
+                jZoneTexte.append("You should not call the xml file: "+file.getName()+"\n" + "It is a xml used by the application to work.\n" + "Process canceled.\n");
                 newExperience = false;
                 jChooseFile.setVisible(false);
                 failFileChooser = true;
