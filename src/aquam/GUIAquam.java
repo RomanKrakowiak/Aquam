@@ -203,7 +203,7 @@ public class GUIAquam extends JFrame implements ActionListener {
                     failFileChooser = false;
                     break;
                 }
-                jZoneTexte.append(address + " selected\n" + "Click on Process to import it\n");
+                jZoneTexte.append(address + " selected\n" + "Click on Process to import\n");
                 break;
             case "Process":
                 processCalled();
@@ -212,7 +212,11 @@ public class GUIAquam extends JFrame implements ActionListener {
                 jZoneTexte.setText("");
                 break;
             case "Stop Process":
-                jZoneTexte.append("Abandon de la tâche en cours\n");
+                jZoneTexte.append("Current process stopped\n");
+                newExperience = false;
+                jChooseFile.setVisible(false);
+                failFileChooser = true;
+                address = "";
                 break;
             case "Close Application":
                 this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -246,7 +250,7 @@ public class GUIAquam extends JFrame implements ActionListener {
                 return file.getName();
             }
         } else {
-            jZoneTexte.append("Open command canceled by user.\n" + "Process canceled.\n");
+            jZoneTexte.append("Current process canceled by user.\n" + "Process canceled.\n");
             newExperience = false;
             jChooseFile.setVisible(false);
             failFileChooser = true;
